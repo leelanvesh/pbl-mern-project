@@ -1,0 +1,17 @@
+{
+  "name": "blood-donor-portal-root",
+  "version": "1.0.0",
+  "description": "MERN Stack Blood Donor Management Portal Root Package",
+  "scripts": {
+    "backend-install": "npm install --prefix backend",
+    "frontend-install": "npm install --prefix frontend",
+    "install-all": "npm run backend-install && npm run frontend-install",
+    "backend": "npm run dev --prefix backend",
+    "frontend": "npm run dev --prefix frontend",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "seed": "node backend/seeds/seed.js"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

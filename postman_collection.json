@@ -1,0 +1,184 @@
+{
+  "info": {
+    "name": "Blood Donor Management Portal API",
+    "_postman_id": "blood-donor-portal-collection-2026",
+    "description": "Postman Collection for testing all Blood Donor Management Portal REST APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register Donor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Suresh Kumar\",\n  \"email\": \"suresh.test@portal.com\",\n  \"password\": \"Donor@123\",\n  \"role\": \"donor\",\n  \"bloodGroup\": \"O+\",\n  \"age\": 24,\n  \"gender\": \"Male\",\n  \"mobile\": \"9876543210\",\n  \"city\": \"Hyderabad\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Login Admin",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@portal.com\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Login Donor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"donor@portal.com\",\n  \"password\": \"Donor@123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/me", "host": ["{{baseUrl}}"], "path": ["api", "auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Donors",
+      "item": [
+        {
+          "name": "Get Donors (Filtered)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/donors?bloodGroup=O%2B&city=Hyderabad&eligibilityStatus=Eligible",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "donors"],
+              "query": [
+                { "key": "bloodGroup", "value": "O+" },
+                { "key": "city", "value": "Hyderabad" },
+                { "key": "eligibilityStatus", "value": "Eligible" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Single Donor by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/donors/{{donorId}}", "host": ["{{baseUrl}}"], "path": ["api", "donors", "{{donorId}}"] }
+          }
+        },
+        {
+          "name": "Admin Create Donor",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"donorName\": \"Anita Rao\",\n  \"email\": \"anita@portal.com\",\n  \"password\": \"Donor@123\",\n  \"bloodGroup\": \"B+\",\n  \"age\": 29,\n  \"gender\": \"Female\",\n  \"mobile\": \"9876543299\",\n  \"city\": \"Bangalore\",\n  \"eligibilityStatus\": \"Eligible\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/donors", "host": ["{{baseUrl}}"], "path": ["api", "donors"] }
+          }
+        },
+        {
+          "name": "Update Donor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"donorName\": \"Anita Rao Updated\",\n  \"city\": \"Hyderabad\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/donors/{{donorId}}", "host": ["{{baseUrl}}"], "path": ["api", "donors", "{{donorId}}"] }
+          }
+        },
+        {
+          "name": "Admin Verify Donor",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/donors/{{donorId}}/verify", "host": ["{{baseUrl}}"], "path": ["api", "donors", "{{donorId}}", "verify"] }
+          }
+        },
+        {
+          "name": "Admin Delete Donor",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/donors/{{donorId}}", "host": ["{{baseUrl}}"], "path": ["api", "donors", "{{donorId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Donations",
+      "item": [
+        {
+          "name": "Get All Donations",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/donations", "host": ["{{baseUrl}}"], "path": ["api", "donations"] }
+          }
+        },
+        {
+          "name": "Record Donation (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"donorId\": \"{{donorId}}\",\n  \"hospitalName\": \"Apollo Blood Center\",\n  \"unitsDonated\": 1,\n  \"donationDate\": \"2026-09-01\",\n  \"notes\": \"Regular voluntary session\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/donations", "host": ["{{baseUrl}}"], "path": ["api", "donations"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard & Reports",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/dashboard/stats", "host": ["{{baseUrl}}"], "path": ["api", "dashboard", "stats"] }
+          }
+        },
+        {
+          "name": "Get Blood Group Aggregate Report",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseUrl}}/api/reports/blood-groups", "host": ["{{baseUrl}}"], "path": ["api", "reports", "blood-groups"] }
+          }
+        }
+      ]
+    }
+  ]
+}
